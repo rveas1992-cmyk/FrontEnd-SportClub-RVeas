@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Administrador SportClub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="db-body role-admin">
+
+    <header class="db-header">
+        <div class="logo-side">
+            <img src="logo_empresa_letra_v1.png" alt="SportClub Logo" style="height: 35px; width: auto; margin-right: 10px;">
+            <span>Admin</span>
+        </div>
+        <div class="user-actions">
+            <a href="#" class="btn-db-action btn-profile">Admin Perfil</a>
+            <a href="Login.html" class="btn-db-action btn-logout">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div class="db-container">
+        <aside class="db-sidebar">
+            <nav class="db-nav">
+                <a href="#" class="active">🏠 Usuarios</a>
+                <a href="#reportes">📊 Reportes Globales</a>
+                <a href="#config">🔧 Configuración</a>
+            </nav>
+        </aside>
+
+        <main class="db-content">
+            <div class="db-welcome">
+                <h2>Control Central del Sistema 🖥️</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Total Usuarios Totales</div><div class="num">1,240</div></div>
+                <div class="stat-card"><div class="label">Total Coaches Registrados</div><div class="num">18</div></div>
+                <div class="stat-card"><div class="label">Total Clases de la Parrilla</div><div class="num">32</div></div>
+            </div>
+
+            <div class="db-box">
+                <h3>Gestión General de Usuarios de la Plataforma</h3>
+                <div class="table-wrapper">
+                    <table class="db-table">
+                        <thead>
+                            <tr>
+                                <th>RUT</th>
+                                <th>Nombre Completo</th>
+                                <th>Rol del Usuario</th>
+                                <th>Estado</th>
+                                <th>Fecha Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>12.345.678-9</td><td>Javier Ahumada</td><td>Usuario / Socio</td><td><span class="badge-status active">Activo</span></td><td>12/01/26</td></tr>
+                            <tr><td>15.678.123-4</td><td>Andrea Zuñiga</td><td>Coach Técnico</td><td><span class="badge-status active">Activo</span></td><td>03/02/26</td></tr>
+                            <tr><td>10.456.789-0</td><td>Claudio Barrientos</td><td>Administrador</td><td><span class="badge-status active">Activo</span></td><td>01/01/26</td></tr>
+                            <tr><td>18.912.345-K</td><td>Esteban Loyola</td><td>Usuario / Socio</td><td><span class="badge-status inactive">Inactivo</span></td><td>22/03/26</td></tr>
+                            <tr><td>14.556.221-8</td><td>Marcelo Silva</td><td>Coach Técnico</td><td><span class="badge-status active">Activo</span></td><td>15/02/26</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="reportes" class="db-box">
+                <h3>Métricas de Uso y Reportes Rápidos</h3>
+                <p style="margin-bottom: 10px;">🔥 <strong>Clases más solicitadas esta semana:</strong> Crossfit Funcional (98% ocupación), Spinning Pro (92%).</p>
+                <p style="margin-bottom: 10px;">👥 <strong>Usuarios activos hoy:</strong> 342 personas registraron ingreso en portería.</p>
+                <p>📅 <strong>Reservas realizadas durante el día actual:</strong> 118 cupos reservados.</p>
+            </div>
+
+            <div id="config" class="db-box">
+                <h3>Operaciones de Control de Sistema</h3>
+                <button class="btn-admin-panel">Crear Nuevo Usuario</button>
+                <button class="btn-admin-panel">Editar Variables Sistema</button>
+                <button class="btn-admin-panel" style="background:#555;">Configuración Avanzada</button>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

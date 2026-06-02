@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportClub - Registro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+
+    <main class="login-card registration-card">
+        <div class="progress-bar">
+            <div class="progress" id="progressLine"></div>
+            <span class="step-indicator active" id="ind-1">1</span>
+            <span class="step-indicator" id="ind-2">2</span>
+            <span class="step-indicator" id="ind-3">3</span>
+        </div>
+
+        <div id="error-box" class="status-msg error" style="display: none;"></div>
+        <div id="success-box" class="status-msg success" style="display: none;"></div>
+
+        <form id="multiStepForm">
+            <div class="form-step step-active" id="step-1">
+                <h2>¡Comencemos! 🚀</h2>
+                <p class="step-subtitle">Crea tus credenciales de acceso primarias.</p>
+                
+                <div class="form-group">
+                    <label for="reg-name">Nombre Completo *</label>
+                    <input type="text" id="reg-name" placeholder="Tu nombre y apellido">
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Correo Electrónico *</label>
+                    <input type="email" id="reg-email" placeholder="tu@correo.com">
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Contraseña *</label>
+                    <input type="password" id="reg-password" placeholder="Crea una clave segura">
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirm">Confirmar Contraseña *</label>
+                    <input type="password" id="reg-confirm" placeholder="Repite tu contraseña">
+                </div>
+                
+                <button type="button" class="btn-submit" onclick="nextStep(1)">Siguiente paso</button>
+            </div>
+
+            <div class="form-step" id="step-2">
+                <h2>Cuéntanos de ti 🏃‍♂️</h2>
+                <p class="step-subtitle">Queremos conocer tu ritmo actual.</p>
+                
+                <div class="form-group">
+                    <label for="reg-age">¿Qué edad tienes? *</label>
+                    <input type="number" id="reg-age" min="12" max="99" placeholder="Ej. 25">
+                </div>
+                <div class="form-group">
+                    <label for="reg-sport">¿Deporte favorito o práctica actual?</label>
+                    <input type="text" id="reg-sport" placeholder="Ej. Crossfit, Fútbol, Ninguno">
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(2)">Atrás</button>
+                    <button type="button" class="btn-submit" onclick="nextStep(2)">Continuar</button>
+                </div>
+            </div>
+
+            <div class="form-step" id="step-3">
+                <h2>Tus Metas 🎯</h2>
+                <p class="step-subtitle">Estructura tus prioridades.</p>
+                
+                <div class="form-group">
+                    <label for="reg-interest">Actividad de mayor interés</label>
+                    <select id="reg-interest">
+                        <option value="cardio">Cardio / Resistencia</option>
+                        <option value="fuerza">Fuerza / Musculación</option>
+                        <option value="flexibilidad">Flexibilidad / Yoga</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn-secondary" onclick="prevStep(3)">Atrás</button>
+                    <button type="submit" class="btn-submit">Finalizar Registro</button>
+                </div>
+            </div>
+        </form>
+
+        <footer class="login-footer">
+            <p>¿Ya tienes cuenta? <a href="Login.html">Inicia sesión</a></p>
+        </footer>
+    </main>
+
+    <script>
+        function nextStep(current) {
+            const errorBox = document.getElementById('error-box');
+            errorBox.style.display = 'none';
+            
+            // Validación específica de contraseñas requerida en el PDF
+            if (current === 1) {
+                const n = document.getElementById('reg-name').value;
+                const e = document.getElementById('reg-email').value;
+                const p = document.getElementById('reg-password').value;
+                const c = document.getElementById('reg-confirm').value;
+                
+                if(!n || !e || !p || !c) { errorBox.innerText = "Rellena los campos obligatorios."; errorBox.style.display = "block"; return; }
+                if(p !== c) { errorBox.innerText = "Las contraseñas no coinciden."; errorBox.style.display = "block"; return; }
+            }
+            if (current === 2) {
+                if(!document.getElementById('reg-age').value) { errorBox.innerText = "Por favor ingresa tu edad."; errorBox.style.display = "block"; return; }
+            }
+
+            document.getElementById(`step-${current}`).classList.remove('step-active');
+            document.getElementById(`step-${current+1}`).classList.add('step-active');
+            updateProgress(current + 1);
+        }
+
+        function prevStep(current) {
+            document.getElementById('error-box').style.display = 'none';
+            document.getElementById(`step-${current}`).classList.remove('step-active');
+            document.getElementById(`step-${current-1}`).classList.add('step-active');
+            updateProgress(current - 1);
+        }
+
+        function updateProgress(step) {
+            document.querySelectorAll('.step-indicator').forEach((ind, idx) => {
+                if(idx < step) ind.classList.add('active');
+                else ind.classList.remove('active');
+            });
+            document.getElementById('progressLine').style.width = ((step - 1) / 2 * 100) + '%';
+        }
+
+        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('error-box').style.display = 'none';
+            const successBox = document.getElementById('success-box');
+            
+            successBox.innerText = "Usuario registrado correctamente. Redirigiendo...";
+            successBox.style.display = "block";
+            
+            setTimeout(() => { window.location.href = "Login.html"; }, 2000);
+        });
+    </script>
+</body>
+</html>

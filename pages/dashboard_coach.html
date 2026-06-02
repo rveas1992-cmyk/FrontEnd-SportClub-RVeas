@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Coach SportClub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="db-body role-coach">
+
+    <header class="db-header">
+        <div class="logo-side">
+            <img src="logo_empresa_letra_v1.png" alt="SportClub Logo" style="height: 35px; width: auto; margin-right: 10px;">
+            <span>Entrenador</span>
+        </div>
+        <div class="user-actions">
+            <a href="#" class="btn-db-action btn-profile">Mi Perfil</a>
+            <a href="Login.html" class="btn-db-action btn-logout">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div class="db-container">
+        <aside class="db-sidebar">
+            <nav class="db-nav">
+                <a href="#" class="active">🏠 Inicio</a>
+                <a href="#alumnos">👥 Alumnos</a>
+                <a href="#clases">🏋️‍♂️ Clases Asignadas</a>
+                <a href="#horarios">📅 Horarios Semanales</a>
+            </nav>
+        </aside>
+
+        <main class="db-content">
+            <div class="db-welcome">
+                <h2>Panel de Gestión del Entrenador 📈</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Total Alumnos a Cargo</div><div class="num">42</div></div>
+                <div class="stat-card"><div class="label">Clases Activas Esta Semana</div><div class="num">8</div></div>
+                <div class="stat-card"><div class="label">Horas Ejecutadas Semanales</div><div class="num">24 hrs</div></div>
+            </div>
+
+            <div id="alumnos" class="db-box">
+                <h3>Listado de Alumnos Asignados</h3>
+                <div class="table-wrapper">
+                    <table class="db-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre Alumno</th>
+                                <th>Correo Electrónico</th>
+                                <th>Clase Inscrita</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Juan Pérez</td><td>juan.p@gmail.com</td><td>Crossfit Funcional</td></tr>
+                            <tr><td>María Loreto</td><td>m.loreto@outlook.com</td><td>Yoga Flexibilidad</td></tr>
+                            <tr><td>Carlos Silva</td><td>csilva@gmail.com</td><td>Crossfit Funcional</td></tr>
+                            <tr><td>Ana Rodríguez</td><td>anita.r@live.cl</td><td>Cardio HIIT</td></tr>
+                            <tr><td>Diego Muñoz</td><td>dmunoz@gmail.com</td><td>Spinning Pro</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="horarios" class="db-box">
+                <h3>Cronograma Semanal de Bloques Técnicos</h3>
+                <div class="table-wrapper">
+                    <table class="db-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre de la Clase</th>
+                                <th>Día Asignado</th>
+                                <th>Hora de Inicio</th>
+                                <th>Capacidad / Alumnos anotados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Crossfit Funcional</strong></td><td>Lunes</td><td>19:00</td><td>15 Alumnos</td></tr>
+                            <tr><td><strong>Cardio HIIT</strong></td><td>Martes</td><td>09:00</td><td>12 Alumnos</td></tr>
+                            <tr><td><strong>Crossfit Funcional</strong></td><td>Miércoles</td><td>18:00</td><td>20 Alumnos</td></tr>
+                            <tr><td><strong>Fuerza Absoluta</strong></td><td>Jueves</td><td>19:00</td><td>10 Alumnos</td></tr>
+                            <tr><td><strong>Yoga Flexibilidad</strong></td><td>Viernes</td><td>20:00</td><td>14 Alumnos</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportClub - Recuperar Contraseña</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+
+    <main class="login-card login-fade">
+        <div class="logo-container">
+            <h2 style="color: var(--primary-purple);">Recuperar Acceso</h2>
+            <p style="font-size: 13px; color: #666; margin-top:5px;">Ingresa tu correo para restablecer tu cuenta.</p>
+        </div>
+
+        <div id="confirm-message" class="status-msg success" style="display: none;"></div>
+
+        <form id="recoveryForm">
+            <div class="form-group">
+                <label for="rec-email">Correo Electrónico registrado</label>
+                <input type="email" id="rec-email" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Enviar Enlace</button>
+        </form>
+
+        <footer class="volver-footer">
+            <a href="Login.html">← Volver al Login</a>
+        </footer>
+    </main>
+
+    <script>
+        document.getElementById('recoveryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const msgBox = document.getElementById('confirm-message');
+            
+            // Renderiza el mensaje incrustado estructuralmente en la tarjeta
+            msgBox.innerText = "Se ha enviado un enlace de recuperación al correo ingresado.";
+            msgBox.style.display = "block";
+            
+            // Limpia el input
+            document.getElementById('rec-email').value = "";
+        });
+    </script>
+</body>
+</html>
