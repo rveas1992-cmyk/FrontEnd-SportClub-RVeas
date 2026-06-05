@@ -31,13 +31,13 @@
 
         <main class="db-content">
             <div class="db-welcome">
-                <h2>Bienvenido Javier, continúa entrenando para alcanzar tus metas. 🔥</h2>
+                <h2 id="welcome-text">Cargando sesión...</h2>
             </div>
 
             <div id="perfil" class="db-box">
                 <h3>Mi Perfil Rápido</h3>
-                <p><strong>Nombre completo:</strong> Javier Ahumada</p>
-                <p><strong>Correo electrónico:</strong> javier.ahumada@inacapmail.cl</p>
+                <p><strong>Nombre completo:</strong><spam id= perfil-nombre>Cargando datos ...</spam></p>
+                <p></p><strong>Correo electrónico:</strong><spam id= perfil-correo>Cargando datos ...</spam></p>
                 <p><strong>Deporte Favorito:</strong> Crossfit / Alta Intensidad</p>
             </div>
 
@@ -86,6 +86,19 @@
             </div>
         </main>
     </div>
+<script>
+    const sessionUser = JSON.parse(localStorage.getItem("user"));
+    if (sessionUser) {
+        if (sessionUser.fullname) {
+            document.getElementById('welcome-text').innerText = `¡Bienvenido ${sessionUser.fullname}, continúa entrenando para alcanzar tus metas! 🔥`;
+        }
+        document.getElementById('perfil-nombre').innerText = sessionUser.fullname;
+        document.getElementById('perfil-correo').innerText = sessionUser.user; // 'user' almacena el correo electrónico
 
+    } else {
+        // Protección de ruta: Si un usuario intenta entrar escribiendo la URL sin loguearse, es expulsado
+        window.location.href = "Login.html";
+    }
+</script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 
         <main class="db-content">
             <div class="db-welcome">
-                <h2>Control Central del Sistema 🖥️</h2>
+                <h2 id="welcome-admin">Control Central del Sistema 🖥️</h2>
             </div>
 
             <div class="stats-grid">
@@ -78,6 +78,15 @@
             </div>
         </main>
     </div>
+
+    <script>
+    const sessionUser = JSON.parse(localStorage.getItem("user"));
+    if (sessionUser) {
+        document.getElementById('welcome-admin').innerText = `Consola Administrador: ${sessionUser.fullname} 🖥️`;
+    } else {
+        window.location.href = "Login.html";
+    }
+</script>
 
 </body>
 </html>
