@@ -1,59 +1,76 @@
-// 1) Sistema de usuarios: Matriz JSON con 3 roles y 2 cuentas por rol (Requisito Obligatorio)
-const users = [
-    // Cuentas de Rol: Usuario / Socio
-    { user: "user1@sportclub.cl", fullname: "Javier Ahumada", password: "1234", role: "user" },
-    { user: "user2@sportclub.cl", fullname: "Ricardo Veas", password: "5678", role: "user" },
-    
-    // Cuentas de Rol: Coach / Entrenador
-    { user: "coach1@sportclub.cl", fullname: "Andrés Marcelo", password: "1234", role: "coach" },
-    { user: "coach2@sportclub.cl", fullname: "Andrea Zuñiga", password: "5678", role: "coach" },
-    
-    // Cuentas de Rol: Administrador
-    { user: "admin1@sportclub.cl", fullname: "Claudio Barrientos", password: "1234", role: "admin" },
-    { user: "admin2@sportclub.cl", fullname: "Eduardo Ramirez", password: "5678", role: "admin" }
-];
-
-// Captura de elementos del DOM
+// 1. Capturamos los elementos del HTML usando los ID que ya tienes configurados
 const loginForm = document.getElementById('loginForm');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const errorMessage = document.getElementById('error-message');
 
-// Evento de escucha para el envío del formulario
-loginForm.addEventListener('submit', function(event) {
-    // Evitamos que la página se recargue automáticamente
+// URL base del backend provisto por el profesor (corre en el puerto 3000)
+const API_URL = "http://localhost:3000/api";
+
+// 2. Escuchamos el momento exacto en que el usuario presiona el botón "Ingresar"
+loginForm.addEventListener('submit', async function(event) {
+    // Evitamos que la página se recargue por defecto para manejarlo con JS
     event.preventDefault();
     
+    // Obtenemos los textos escritos por el usuario
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value;
     
-    // Ocultar mensaje de error previo
+    // Limpiamos cualquier mensaje de error de un intento anterior
     errorMessage.style.display = 'none';
     errorMessage.innerText = '';
 
-    // 2) Validación: Buscar si existe un usuario que coincida con las credenciales
-    const foundUser = users.find(u => u.user === emailValue && u.password === passwordValue);
+    try {
+        // 3. Hacemos la llamada real (Fetch) al servidor de la asignatura
+        const response = await fetch(`${API_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                email: emailValue,
+                password: passwordValue
+            })
+        });
 
-    if (foundUser) {
-        // 5) Guardar el objeto del usuario logueado en localStorage (sin contraseña por seguridad)
-        const sessionData = {
-            fullname: foundUser.fullname,
-            role: foundUser.role,
-            user: foundUser.user
-        };
-        localStorage.setItem("user", JSON.stringify(sessionData));
+        // Convertimos la respuesta del servidor en un objeto JSON entendible
+        const result = await response.json();
 
-        // 3) Redirección: Enrutar al dashboard correspondiente según el rol del perfil detectado
-        if (foundUser.role === "user") {
-            window.location.href = "dashboard_usuario.html";
-        } else if (foundUser.role === "coach") {
-            window.location.href = "dashboard_coach.html";
-        } else if (foundUser.role === "admin") {
-            window.location.href = "dashboard_admin.html";
+        // 4. Si el servidor dice que los datos son correctos
+        if (response.ok && result.ok) {
+            
+            // Guardamos el token de seguridad oficial en el localStorage
+            localStorage.setItem('token', result.data.token);
+            
+            // Guardamos los datos de sesión para dar la bienvenida en tus dashboards
+            const sessionData = {
+                fullname: result.data.user.full_name,
+                role: result.data.user.role,
+                user: result.data.user.email
+            };
+            localStorage.setItem("user", JSON.stringify(sessionData));
+
+            // 5. Evaluamos el rol real que viene de la API para redirigir
+            const userRole = result.data.user.role;
+            
+            if (userRole === "user") {
+                window.location.href = "dashboard-usuario.html";
+            } else if (userRole === "coach") {
+                window.location.href = "dashboard_coach.html"; // Mantenemos la ruta de tu HTML
+            } else if (userRole === "admin") {
+                window.location.href = "dashboard_admin.html"; // Mantenemos la ruta de tu HTML
+            }
+
+        } else {
+            // 6. Si las credenciales están malas, el servidor manda un mensaje y lo mostramos en pantalla
+            errorMessage.innerText = result.message || "Credenciales incorrectas. Inténtalo nuevamente.";
+            errorMessage.style.display = 'block'; // Hacemos visible el div de error
         }
-    } else {
-        // 4) Manejo de errores: Mostrar mensaje "Credenciales incorrectas" integrado en pantalla (NO alert)
-        errorMessage.innerText = "Credenciales incorrectas. Inténtalo nuevamente.";
+
+    } catch (error) {
+        // Si el backend está apagado o no responde, caerá en esta sección
+        console.error("Error de conexión:", error);
+        errorMessage.innerText = "Error: El servidor backend está apagado. Inícialo con 'npm run dev'.";
         errorMessage.style.display = 'block';
     }
 });
