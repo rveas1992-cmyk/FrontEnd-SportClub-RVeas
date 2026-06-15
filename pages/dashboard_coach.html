@@ -87,12 +87,12 @@
         </main>
     </div>
     <script>
-    const sessionUser = JSON.parse(localStorage.getItem("user"));
-    if (sessionUser) {
+        const sessionUser = JSON.parse(localStorage.getItem("user"));
+        if (sessionUser) {
         document.getElementById('welcome-coach').innerText = `Panel del Coach: ${sessionUser.fullname} 📈`;
-    } else {
+        } else {
         window.location.href = "Login.html";
-    }
+        }
 </script>
 
 </body>
