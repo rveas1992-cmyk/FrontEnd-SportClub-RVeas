@@ -15,7 +15,7 @@
         </div>
         <div class="user-actions">
             <a href="#" class="btn-db-action btn-profile">Admin Perfil</a>
-            <a href="Login.html" class="btn-db-action btn-logout">Cerrar Sesión</a>
+            <a href="#" id="btn-logout-admin" class="btn-db-action btn-logout">Cerrar Sesión</a>
         </div>
     </header>
 
@@ -33,10 +33,73 @@
                 <h2 id="welcome-admin">Control Central del Sistema 🖥️</h2>
             </div>
 
-            <div class="stats-grid">
-                <div class="stat-card"><div class="label">Total Usuarios Totales</div><div class="num">1,240</div></div>
-                <div class="stat-card"><div class="label">Total Coaches Registrados</div><div class="num">18</div></div>
-                <div class="stat-card"><div class="label">Total Clases de la Parrilla</div><div class="num">32</div></div>
+            <div id="crud-error-box" style="display: none; color: #dc3545; background: #f8d7da; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; border: 1px solid #f5c6cb;"></div>
+            <div id="crud-success-box" style="display: none; color: #155724; background: #d4edda; padding: 12px; border-radius: 6px; margin-bottom: 15px; font-weight: bold; border: 1px solid #c3e6cb;"></div>
+
+            <div class="db-grid-two-columns" style="margin-bottom: 25px;">
+                
+                <div class="db-box" id="admin-form-container" style="margin: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+                        <div>
+                            <h3 id="form-title" style="margin:0; font-size:18px;">Operaciones de Sistema</h3>
+                            <p id="form-subtitle" style="margin:5px 0 0 0; font-size:12px; color:#666;">Gestión de credenciales de la plataforma.</p>
+                        </div>
+                        <button id="btn-toggle-create-admin" class="btn-submit-action" style="width: auto; padding: 8px 16px; margin: 0; font-size:13px;">➕ Nuevo Usuario</button>
+                    </div>
+
+                    <form id="adminUserForm" style="display: none;">
+                        <input type="hidden" id="admin-user-id">
+                        
+                        <div class="form-group" style="margin-bottom: 12px;">
+                            <label for="admin-name" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Nombre Completo *</label>
+                            <input type="text" id="admin-name" required placeholder="Nombre y Apellido" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+                        
+                        <div class="form-group-row" style="display:flex; gap:10px; margin-bottom:12px;">
+                            <div class="form-group" style="flex:1;">
+                                <label for="admin-email" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Correo Electrónico *</label>
+                                <input type="email" id="admin-email" required placeholder="correo@demo.cl" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                            </div>
+                            <div class="form-group" style="flex:1;">
+                                <label for="admin-role" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Rol de Acceso *</label>
+                                <select id="admin-role" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background:white;">
+                                    <option value="user">Socio (User)</option>
+                                    <option value="coach">Coach Técnico</option>
+                                    <option value="admin">Administrador</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="password-row-wrapper" style="margin-bottom:15px;">
+                            <label for="admin-password" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Contraseña * <span style="font-size: 11px; color: #666;" id="pass-lbl-note">(Mínimo 8 caracteres)</span></label>
+                            <input type="password" id="admin-password" placeholder="Asigna una clave segura" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                        </div>
+
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" class="btn-submit-action" id="btn-admin-submit" style="padding:10px 20px;">Guardar Usuario</button>
+                            <button type="button" id="btn-admin-cancel" style="padding:10px 20px; background:#f0f0f0; border:1px solid #ccc; border-radius:4px; cursor:pointer;">Cancelar</button>
+                        </div>
+                    </form>
+
+                    <div id="admin-form-placeholder" style="color: #666; font-style: italic; font-size: 13px; padding: 10px 0;">
+                        Presiona el botón "Nuevo Usuario" superior para dar de alta una nueva cuenta en SportClub.
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="stat-card" style="background:#fff; padding:15px; border-radius:8px; border-left:4px solid #2e1a47; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                        <div class="label" style="color:#666; font-size:12px; text-transform:uppercase;">Total Cuentas</div>
+                        <div class="num" id="lbl-total-users" style="font-size:24px; font-weight:bold; color:#2e1a47; margin-top:5px;">--</div>
+                    </div>
+                    <div class="stat-card" style="background:#fff; padding:15px; border-radius:8px; border-left:4px solid #d4af37; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                        <div class="label" style="color:#666; font-size:12px; text-transform:uppercase;">Coaches Activos</div>
+                        <div class="num" id="lbl-total-coaches" style="font-size:24px; font-weight:bold; color:#2e1a47; margin-top:5px;">--</div>
+                    </div>
+                    <div class="stat-card" style="background:#fff; padding:15px; border-radius:8px; border-left:4px solid #cc2929; box-shadow:0 2px 4px rgba(0,0,0,0.05);">
+                        <div class="label" style="color:#666; font-size:12px; text-transform:uppercase;">Administradores</div>
+                        <div class="num" id="lbl-total-admins" style="font-size:24px; font-weight:bold; color:#2e1a47; margin-top:5px;">--</div>
+                    </div>
+                </div>
             </div>
 
             <div class="db-box">
@@ -45,48 +108,30 @@
                     <table class="db-table">
                         <thead>
                             <tr>
-                                <th>RUT</th>
+                                <th>ID</th>
                                 <th>Nombre Completo</th>
+                                <th>Correo Electrónico</th>
                                 <th>Rol del Usuario</th>
-                                <th>Estado</th>
                                 <th>Fecha Registro</th>
+                                <th style="text-align: center;">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr><td>12.345.678-9</td><td>Javier Ahumada</td><td>Usuario / Socio</td><td><span class="badge-status active">Activo</span></td><td>12/01/26</td></tr>
-                            <tr><td>15.678.123-4</td><td>Andrea Zuñiga</td><td>Coach Técnico</td><td><span class="badge-status active">Activo</span></td><td>03/02/26</td></tr>
-                            <tr><td>10.456.789-0</td><td>Claudio Barrientos</td><td>Administrador</td><td><span class="badge-status active">Activo</span></td><td>01/01/26</td></tr>
-                            <tr><td>18.912.345-K</td><td>Esteban Loyola</td><td>Usuario / Socio</td><td><span class="badge-status inactive">Inactivo</span></td><td>22/03/26</td></tr>
-                            <tr><td>14.556.221-8</td><td>Marcelo Silva</td><td>Coach Técnico</td><td><span class="badge-status active">Activo</span></td><td>15/02/26</td></tr>
+                        <tbody id="users-table-body">
+                            <tr><td colspan="6" style="text-align: center; color:#666; padding:20px;">Sincronizando datos con el servidor SQLite...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <div id="reportes" class="db-box">
+            <div id="reportes" class="db-box" style="margin-top: 25px;">
                 <h3>Métricas de Uso y Reportes Rápidos</h3>
                 <p style="margin-bottom: 10px;">🔥 <strong>Clases más solicitadas esta semana:</strong> Crossfit Funcional (98% ocupación), Spinning Pro (92%).</p>
                 <p style="margin-bottom: 10px;">👥 <strong>Usuarios activos hoy:</strong> 342 personas registraron ingreso en portería.</p>
                 <p>📅 <strong>Reservas realizadas durante el día actual:</strong> 118 cupos reservados.</p>
             </div>
-
-            <div id="config" class="db-box">
-                <h3>Operaciones de Control de Sistema</h3>
-                <button class="btn-admin-panel">Crear Nuevo Usuario</button>
-                <button class="btn-admin-panel">Editar Variables Sistema</button>
-                <button class="btn-admin-panel" style="background:#555;">Configuración Avanzada</button>
-            </div>
         </main>
     </div>
 
-    <script>
-    const sessionUser = JSON.parse(localStorage.getItem("user"));
-    if (sessionUser) {
-        document.getElementById('welcome-admin').innerText = `Consola Administrador: ${sessionUser.fullname} 🖥️`;
-    } else {
-        window.location.href = "Login.html";
-    }
-</script>
-
+    <script src="../js/admin.js"></script>
 </body>
 </html>
