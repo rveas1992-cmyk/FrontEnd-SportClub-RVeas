@@ -54,7 +54,7 @@ loginForm.addEventListener('submit', async function(event) {
             const userRole = result.data.user.role;
             
             if (userRole === "user") {
-                window.location.href = "dashboard-usuario.html";
+                window.location.href = "dashboard_usuario.html";
             } else if (userRole === "coach") {
                 window.location.href = "dashboard_coach.html"; // Mantenemos la ruta de tu HTML
             } else if (userRole === "admin") {

@@ -27,21 +27,25 @@
                 <div class="form-group">
                     <label for="reg-name">Nombre Completo *</label>
                     <input type="text" id="reg-name" placeholder="Tu nombre y apellido">
+                    <span id="err-name" style="color: #dc3545; font-size: 12px; display: none; margin-top: 4px;"></span>
                 </div>
                 <div class="form-group">
                     <label for="reg-email">Correo Electrónico *</label>
                     <input type="email" id="reg-email" placeholder="tu@correo.com">
+                    <span id="err-email" style="color: #dc3545; font-size: 12px; display: none; margin-top: 4px;"></span>
                 </div>
                 <div class="form-group">
                     <label for="reg-password">Contraseña *</label>
-                    <input type="password" id="reg-password" placeholder="Crea una clave segura">
+                    <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres">
+                    <span id="err-password" style="color: #dc3545; font-size: 12px; display: none; margin-top: 4px;"></span>
                 </div>
                 <div class="form-group">
                     <label for="reg-confirm">Confirmar Contraseña *</label>
                     <input type="password" id="reg-confirm" placeholder="Repite tu contraseña">
+                    <span id="err-confirm" style="color: #dc3545; font-size: 12px; display: none; margin-top: 4px;"></span>
                 </div>
                 
-                <button type="button" class="btn-submit" onclick="nextStep(1)">Siguiente paso</button>
+                <button type="button" class="btn-submit" onclick="handleNextStep(1)">Siguiente paso</button>
             </div>
 
             <div class="form-step" id="step-2">
@@ -51,6 +55,7 @@
                 <div class="form-group">
                     <label for="reg-age">¿Qué edad tienes? *</label>
                     <input type="number" id="reg-age" min="12" max="99" placeholder="Ej. 25">
+                    <span id="err-age" style="color: #dc3545; font-size: 12px; display: none; margin-top: 4px;"></span>
                 </div>
                 <div class="form-group">
                     <label for="reg-sport">¿Deporte favorito o práctica actual?</label>
@@ -58,8 +63,8 @@
                 </div>
                 
                 <div class="btn-group">
-                    <button type="button" class="btn-secondary" onclick="prevStep(2)">Atrás</button>
-                    <button type="button" class="btn-submit" onclick="nextStep(2)">Continuar</button>
+                    <button type="button" class="btn-secondary" onclick="handlePrevStep(2)">Atrás</button>
+                    <button type="button" class="btn-submit" onclick="handleNextStep(2)">Continuar</button>
                 </div>
             </div>
 
@@ -77,7 +82,7 @@
                 </div>
 
                 <div class="btn-group">
-                    <button type="button" class="btn-secondary" onclick="prevStep(3)">Atrás</button>
+                    <button type="button" class="btn-secondary" onclick="handlePrevStep(3)">Atrás</button>
                     <button type="submit" class="btn-submit">Finalizar Registro</button>
                 </div>
             </div>
@@ -88,54 +93,6 @@
         </footer>
     </main>
 
-    <script>
-        function nextStep(current) {
-            const errorBox = document.getElementById('error-box');
-            errorBox.style.display = 'none';
-            
-            if (current === 1) {
-                const n = document.getElementById('reg-name').value;
-                const e = document.getElementById('reg-email').value;
-                const p = document.getElementById('reg-password').value;
-                const c = document.getElementById('reg-confirm').value;
-                
-                if(!n || !e || !p || !c) { errorBox.innerText = "Rellena los campos obligatorios."; errorBox.style.display = "block"; return; }
-                if(p !== c) { errorBox.innerText = "Las contraseñas no coinciden."; errorBox.style.display = "block"; return; }
-            }
-            if (current === 2) {
-                if(!document.getElementById('reg-age').value) { errorBox.innerText = "Por favor ingresa tu edad."; errorBox.style.display = "block"; return; }
-            }
-
-            document.getElementById(`step-${current}`).classList.remove('step-active');
-            document.getElementById(`step-${current+1}`).classList.add('step-active');
-            updateProgress(current + 1);
-        }
-
-        function prevStep(current) {
-            document.getElementById('error-box').style.display = 'none';
-            document.getElementById(`step-${current}`).classList.remove('step-active');
-            document.getElementById(`step-${current-1}`).classList.add('step-active');
-            updateProgress(current - 1);
-        }
-
-        function updateProgress(step) {
-            document.querySelectorAll('.step-indicator').forEach((ind, idx) => {
-                if(idx < step) ind.classList.add('active');
-                else ind.classList.remove('active');
-            });
-            document.getElementById('progressLine').style.width = ((step - 1) / 2 * 100) + '%';
-        }
-
-        document.getElementById('multiStepForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('error-box').style.display = 'none';
-            const successBox = document.getElementById('success-box');
-            
-            successBox.innerText = "Usuario registrado correctamente. Redirigiendo...";
-            successBox.style.display = "block";
-            
-            setTimeout(() => { window.location.href = "Login.html"; }, 2000);
-        });
-    </script>
+    <script src="../js/registro.js"></script>
 </body>
 </html>
