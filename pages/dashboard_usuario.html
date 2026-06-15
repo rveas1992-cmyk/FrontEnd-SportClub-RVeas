@@ -33,102 +33,107 @@
             
             <div class="db-welcome-banner">
                 <h2 id="welcome-text">Cargando sesión...</h2>
-                <p>Monitorea tu rendimiento, gestiona tus clases y alcanza tu máximo nivel.</p>
+                <p>Monitorea tu rendimiento, gestiona tus clases y alcanza tu máximo nivel en SportClub.</p>
             </div>
 
-            <div class="db-grid-two-columns" id="perfil-section">
+            <!-- CONTENEDOR UNIFICADO EN UNA SOLA COLUMNA LIMPIA -->
+            <div style="display: flex; flex-direction: column; gap: 25px;" id="perfil-section">
                 
-                <div class="db-card-box">
-                    <div class="card-box-header" style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                <!-- BLOQUE 1: INFORMACIÓN PERSONAL (ANCHO COMPLETO) -->
+                <div class="db-box" style="margin: 0;">
+                    <div class="card-box-header" style="display: flex; justify-content: space-between; align-items: center; gap: 15px; border-bottom: 1px solid #eeeaf5; padding-bottom: 10px; margin-bottom: 15px;">
                         <div>
-                            <h3>Mi Perfil de Usuario 👤</h3>
-                            <p>Gestiona tu información personal y preferencias de cuenta.</p>
+                            <h3 style="margin:0; font-size: 18px;">Información Personal</h3>
+                            <p style="margin:5px 0 0 0; font-size: 13px; color: #666;">Gestiona tu información personal y preferencias de cuenta.</p>
                         </div>
-                        <button id="btn-toggle-edit" class="btn-card-enroll" style="width: auto; padding: 8px 16px; margin: 0; white-space: nowrap;">Editar Datos</button>
+                        <button id="btn-toggle-edit" class="btn-submit-action" style="width: auto; padding: 8px 16px; margin: 0; font-size:13px;">Editar Perfil</button>
                     </div>
 
-                    <div id="profile-error-box" class="status-msg error" style="display: none; margin-bottom: 15px;"></div>
-                    <div id="profile-success-box" class="status-msg success" style="display: none; margin-bottom: 15px;"></div>
+                    <!-- Feedback visual -->
+                    <div id="profile-error-box" class="status-msg error" style="display: none; margin-bottom: 15px; color: #dc3545; font-weight: bold;"></div>
+                    <div id="profile-success-box" class="status-msg success" style="display: none; margin-bottom: 15px; color: #28a745; font-weight: bold;"></div>
 
-                    <div id="profile-view-mode" style="margin-top: 10px; line-height: 2;">
-                        <p style="margin: 8px 0;"><strong>Nombre Completo:</strong> <span id="view-prof-name" style="color: #2b2233; margin-left: 5px;">Cargando...</span></p>
-                        <p style="margin: 8px 0;"><strong>Correo Electrónico:</strong> <span id="view-prof-email" style="color: #6d617a; margin-left: 5px;">Cargando...</span></p>
-                        <p style="margin: 8px 0;"><strong>Rol en el Sistema:</strong> <span id="view-prof-role" class="badge" style="background-color: #eeeaf5; color: #2e1a47; margin-left: 5px; font-weight: bold;">Cargando...</span></p>
-                        <p style="margin: 8px 0;"><strong>Fecha de Nacimiento:</strong> <span id="view-prof-birth" style="color: #2b2233; margin-left: 5px;">Cargando...</span></p>
-                    </div>
-
-                        
-
-                    <form id="profileForm" style="display: none; margin-top: 15px;">
-                        <div class="form-group-row">
-                            <div class="form-group">
-                                <label for="prof-name">Nombre Completo *</label>
-                                <input type="text" id="prof-name" placeholder="Tu nombre" required>
-                                <span id="prof-err-name" class="error-text-span" style="display: none;"></span>
+                    <!-- Formulario de datos -->
+                    <form id="profileForm">
+                        <div class="form-group-row" style="display: flex; gap: 15px; margin-bottom: 12px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="prof-name" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Nombre completo *</label>
+                                <input type="text" id="prof-name" disabled style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background:#f5f5f5;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="prof-email" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Email *</label>
+                                <input type="email" id="prof-email" disabled style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background:#f5f5f5;">
                             </div>
                         </div>
 
-                        <div class="form-group-row">
-                            <div class="form-group">
-                                <label for="prof-email">Correo Electrónico</label>
-                                <input type="email" id="prof-email" disabled class="input-disabled-lock" title="No modificable por seguridad">
+                        <div class="form-group-row" style="display: flex; gap: 15px; margin-bottom: 12px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="prof-birth" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Fecha de nacimiento *</label>
+                                <input type="date" id="prof-birth" disabled style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background:#f5f5f5;">
                             </div>
-                            <div class="form-group">
-                                <label for="prof-role">Rol del Sistema</label>
-                                <input type="text" id="prof-role" disabled class="input-disabled-lock">
-                            </div>
-                        </div>
-
-                        <div class="form-group-row">
-                            <div class="form-group">
-                                <label for="prof-birth">Fecha de Nacimiento</label>
-                                <input type="date" id="prof-birth">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="prof-sport" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Deporte favorito</label>
+                                <input type="text" id="prof-sport" disabled placeholder="Ej: Fútbol, Crossfit" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; background:#f5f5f5;">
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 12px; margin-top: 15px;">
-                            <button type="submit" class="btn-submit-action">Guardar Cambios</button>
-                            <button type="button" id="btn-cancel-edit" class="btn-card-enroll" style="width: auto; margin: 0; padding: 10px 20px;">Cancelar</button>
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label for="prof-metadata" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Otros / Metadata (intereses, habilidades, etc.)</label>
+                            <textarea id="prof-metadata" disabled rows="3" placeholder="Cuéntanos más sobre tus intereses deportivos..." style="width: 100%; padding:8px; border:1px solid #ccc; border-radius:4px; font-family: inherit; resize: vertical; box-sizing: border-box; background:#f5f5f5;"></textarea>
+                        </div>
+
+                        <div id="profile-action-buttons" style="display: none; gap: 12px; margin-top: 15px;">
+                            <button type="button" id="btn-cancel-edit" style="padding:10px 20px; background:#f0f0f0; border:1px solid #ccc; border-radius:4px; cursor:pointer;">Cancelar</button>
+                            <button type="submit" class="btn-submit-action" style="padding:10px 20px;">Guardar cambios</button>
                         </div>
                     </form>
                 </div>
 
-                <div class="db-card-box statistics-sidebar">
-                    <div class="card-box-header">
-                        <h3>Tu Estado Actual</h3>
-                        <p>Resumen de tu progreso en SportClub.</p>
-                    </div>
-                    
-                    <div class="mini-stat-row">
-                        <div class="mini-card">
-                            <span class="icon">🔥</span>
-                            <div class="info">
-                                <h4>Deporte Primario</h4>
-                                <p id="txt-fav-sport">Crossfit / HIIT</p>
-                            </div>
-                        </div>
-                        <div class="mini-card">
-                            <span class="icon">⚡</span>
-                            <div class="info">
-                                <h4>Nivel de Membresía</h4>
-                                <p>Socio Activo Pro</p>
-                            </div>
-                        </div>
+                <!-- BLOQUE 2: CAMBIAR CONTRASEÑA -->
+                <div class="db-box" style="margin: 0;">
+                    <div class="card-box-header" style="border-bottom: 1px solid #eeeaf5; padding-bottom: 10px; margin-bottom: 15px;">
+                        <h3 style="margin:0; font-size: 18px;">Cambiar Contraseña</h3>
+                        <p style="margin:5px 0 0 0; font-size: 13px; color: #666;">Mantén las credenciales de seguridad de tu cuenta actualizadas.</p>
                     </div>
 
-                    <div class="motivation-box">
-                        <p><em>"La disciplina supera al talento. Cada entrenamiento cuenta."</em></p>
-                    </div>
+                    <div id="pass-error-box" class="status-msg error" style="display: none; margin-bottom: 15px; color: #dc3545; font-weight: bold;"></div>
+                    <div id="pass-success-box" class="status-msg success" style="display: none; margin-bottom: 15px; color: #28a745; font-weight: bold;"></div>
+
+                    <form id="changePasswordForm">
+                        <div class="form-group-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="pass-current" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Contraseña actual *</label>
+                                <input type="password" id="pass-current" required placeholder="Tu contraseña actual" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="pass-new" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Nueva contraseña *</label>
+                                <input type="password" id="pass-new" required placeholder="Mínimo 8 caracteres" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="pass-confirm" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Confirmar nueva contraseña *</label>
+                                <input type="password" id="pass-confirm" required placeholder="Repite nueva contraseña" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(46, 26, 71, 0.04); padding: 12px; border-radius: 6px; font-size: 12.5px; color: #584c63; margin-bottom: 15px; border-left: 3px solid #d4af37;">
+                            ℹ️ La contraseña debe tener al menos 8 caracteres, incluir números y letras.
+                        </div>
+
+                        <div style="text-align: right;">
+                            <button type="submit" class="btn-submit-action" style="padding: 10px 20px;">Actualizar contraseña</button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
 
-            <div class="db-card-box full-width-section" id="reservas-section" style="margin-top: 25px;">
-                <div class="card-box-header">
+            <!-- TABLA INFERIOR DE RESERVAS -->
+            <div class="db-box" id="reservas-section" style="margin-top: 25px;">
+                <div class="card-box-header" style="margin-bottom: 15px;">
                     <h3>📅 Mis Próximas Reservas Agendadas</h3>
-                    <p>Horarios programados para tus semanas de entrenamiento.</p>
                 </div>
-                <div class="table-container-wrapper">
-                    <table class="sport-db-table">
+                <div class="table-wrapper">
+                    <table class="db-table">
                         <thead>
                             <tr>
                                 <th>Clase / Especialidad</th>
@@ -139,40 +144,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td>Crossfit Funcional</td><td>Lunes</td><td>19:00</td><td>Coach Marcelo</td><td><span class="badge badge-active">Confirmada</span></td></tr>
-                            <tr><td>Fuerza Aplicada</td><td>Martes</td><td>08:30</td><td>Coach Andrea</td><td><span class="badge badge-active">Confirmada</span></td></tr>
-                            <tr><td>Cardio HIIT</td><td>Miércoles</td><td>18:00</td><td>Coach Carlos</td><td><span class="badge badge-active">Confirmada</span></td></tr>
-                            <tr><td>Yoga Flexibilidad</td><td>Viernes</td><td>20:00</td><td>Coach Elena</td><td><span class="badge badge-pending">En Espera</span></td></tr>
-                            <tr><td>Spinning Pro</td><td>Sábado</td><td>10:00</td><td>Coach Marcelo</td><td><span class="badge badge-active">Confirmada</span></td></tr>
+                            <tr><td>Crossfit Funcional</td><td>Lunes</td><td>19:00</td><td>Coach Marcelo</td><td><span style="background:#e6f9ed; color:#107c41; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">Confirmada</span></td></tr>
+                            <tr><td>Fuerza Aplicada</td><td>Martes</td><td>08:30</td><td>Coach Andrea</td><td><span style="background:#e6f9ed; color:#107c41; padding:3px 8px; border-radius:4px; font-weight:bold; font-size:12px;">Confirmada</span></td></tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <div class="db-card-box full-width-section" id="clases-section" style="margin-top: 25px;">
-                <div class="card-box-header">
-                    <h3>💪 Clases Disponibles para Inscripción</h3>
-                    <p>Explora nuevas disciplinas e inscríbete usando tus créditos mensuales.</p>
-                </div>
-                <div class="cards-products-grid">
-                    <div class="class-item-card">
-                        <div class="card-badge-top">Fitness</div>
-                        <h4>Pilates Recreativo</h4>
-                        <p>Ideal para el control postural, elongación y fortalecimiento interno profundo.</p>
-                        <button class="btn-card-enroll">Reservar Cupo</button>
-                    </div>
-                    <div class="class-item-card">
-                        <div class="card-badge-top combat">Combate</div>
-                        <h4>Boxeo Técnico</h4>
-                        <p>Descarga energía al máximo aprendiendo los fundamentos técnicos del golpeo real.</p>
-                        <button class="btn-card-enroll">Reservar Cupo</button>
-                    </div>
-                    <div class="class-item-card">
-                        <div class="card-badge-top dance">Cardio</div>
-                        <h4>Zumba Dance</h4>
-                        <p>Quema calorías de forma recreativa y divertida al ritmo de música moderna.</p>
-                        <button class="btn-card-enroll">Reservar Cupo</button>
-                    </div>
                 </div>
             </div>
 

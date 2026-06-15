@@ -70,9 +70,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group" id="password-row-wrapper" style="margin-bottom:15px;">
-                            <label for="admin-password" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Contraseña * <span style="font-size: 11px; color: #666;" id="pass-lbl-note">(Mínimo 8 caracteres)</span></label>
-                            <input type="password" id="admin-password" placeholder="Asigna una clave segura" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                        <div class="form-group-row" id="password-row-wrapper" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label for="admin-password" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Contraseña * <span style="font-size: 11px; color: #666;">(Mín. 8)</span></label>
+                                <input type="password" id="admin-password" placeholder="Clave segura" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label for="admin-confirm-password" style="display:block; margin-bottom:5px; font-weight:600; font-size:13px;">Confirmar Contraseña *</label>
+                                <input type="password" id="admin-confirm-password" placeholder="Repite la clave" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                            </div>
                         </div>
 
                         <div style="display: flex; gap: 10px;">

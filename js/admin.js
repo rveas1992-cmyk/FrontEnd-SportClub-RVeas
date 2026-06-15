@@ -18,6 +18,7 @@ const nameInput = document.getElementById('admin-name');
 const emailInput = document.getElementById('admin-email');
 const roleSelect = document.getElementById('admin-role');
 const passwordInput = document.getElementById('admin-password');
+const passwordConfirmInput = document.getElementById('admin-confirm-password');
 const passwordWrapper = document.getElementById('password-row-wrapper');
 
 // Estado de sesión
@@ -46,8 +47,9 @@ if (btnToggleCreateAdmin) {
 
         if (formTitle) formTitle.innerText = "Registrar Nuevo Usuario ➕";
         if (formSubtitle) formSubtitle.innerText = "Crea una nueva cuenta asignando un rol específico.";
-        if (passwordWrapper) passwordWrapper.style.display = 'block';
+        if (passwordWrapper) passwordWrapper.style.display = 'flex';
         if (passwordInput) passwordInput.required = true;
+        if (passwordConfirmInput) passwordConfirmInput.required = true;
     });
 }
 
@@ -61,6 +63,12 @@ function cerrarFormularioAdmin() {
     if (btnToggleCreateAdmin) btnToggleCreateAdmin.style.display = 'block';
     if (userIdInput) userIdInput.value = '';
     if (adminUserForm) adminUserForm.reset();
+    
+    // Restaurar requerimientos predeterminados
+    if (passwordInput) passwordInput.required = true;
+    if (passwordConfirmInput) passwordConfirmInput.required = true;
+    if (passwordConfirmInput) passwordConfirmInput.style.borderColor = "";
+
     if (formTitle) formTitle.innerText = "Operaciones de Sistema";
     if (formSubtitle) formSubtitle.innerText = "Gestión de credenciales de la plataforma.";
 }
@@ -146,7 +154,7 @@ window.eliminarUsuario = async function(id) {
     }
 };
 
-// 3. PASAR DATOS AL FORMULARIO PARA EDITAR (CON AUTO-SCROLL SUAVE)
+// 3. PASAR DATOS AL FORMULARIO PARA EDITAR (CON AUTO-SCROLL)
 window.prepararEdicion = function(id, name, email, role) {
     if (adminUserForm) adminUserForm.style.display = 'block';
     if (formPlaceholder) formPlaceholder.style.display = 'none';
@@ -158,11 +166,13 @@ window.prepararEdicion = function(id, name, email, role) {
     if (roleSelect) roleSelect.value = role;
 
     if (formTitle) formTitle.innerText = `Modificando Usuario #${id} 🛠️`;
-    if (formSubtitle) formSubtitle.innerText = "Modifica los privilegios del registro. Por seguridad, las contraseñas se manejan desde el alta primaria.";
+    if (formSubtitle) formSubtitle.innerText = "Modifica los privilegios del registro. Las contraseñas se manejan desde el alta primaria.";
+    
     if (passwordWrapper) passwordWrapper.style.display = 'none';
     if (passwordInput) passwordInput.required = false;
+    if (passwordConfirmInput) passwordConfirmInput.required = false;
 
-    // 🚀 EFECTO MÁGICO: Lleva la pantalla automáticamente hacia arriba de forma suave
+    // Auto-scroll fluido hacia arriba
     if (adminFormContainer) {
         adminFormContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -174,12 +184,14 @@ if (adminUserForm) {
         e.preventDefault();
         if (errorBox) errorBox.style.display = 'none';
         if (successBox) successBox.style.display = 'none';
+        if (passwordConfirmInput) passwordConfirmInput.style.borderColor = "";
 
         const id = userIdInput.value;
         const name = nameInput.value.trim();
         const email = emailInput.value.trim();
         const role = roleSelect.value;
         const password = passwordInput.value;
+        const confirmPassword = passwordConfirmInput ? passwordConfirmInput.value : "";
 
         const esEdicion = id !== "";
 
@@ -192,9 +204,16 @@ if (adminUserForm) {
             metodo = 'PUT';
             payload = { full_name: name, email: email, role: role };
         } else {
+            // Validaciones añadidas por requerimiento explícito de la imagen de referencia
             if (password.length < 8) {
                 errorBox.innerText = "La contraseña debe tener un mínimo de 8 caracteres.";
                 errorBox.style.display = 'block';
+                return;
+            }
+            if (password !== confirmPassword) {
+                errorBox.innerText = "Las contraseñas ingresadas en el formulario no coinciden.";
+                errorBox.style.display = 'block';
+                if (passwordConfirmInput) passwordConfirmInput.style.borderColor = "#dc3545";
                 return;
             }
         }
@@ -219,7 +238,6 @@ if (adminUserForm) {
                 cerrarFormularioAdmin();
                 listarUsuarios();
                 
-                // Hace scroll suave de vuelta a las alertas arriba del formulario
                 if (adminFormContainer) adminFormContainer.scrollIntoView({ behavior: 'smooth' });
             } else {
                 if (errorBox) {
